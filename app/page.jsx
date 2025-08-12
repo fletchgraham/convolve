@@ -9,9 +9,12 @@ import {
   clearGridAtom,
 } from "../state/gridAtoms";
 import EditableGrid from "../components/editable-grid";
+import GridControls from "../components/grid-controls";
 
 export default function Page() {
   const [grid, setGrid] = useAtom(gridAtom);
+  const rowCount = useAtomValue(rowsAtom);
+  const colCount = useAtomValue(colsAtom);
   const setGridSize = useSetAtom(setGridSizeAtom);
   const clearGrid = useSetAtom(clearGridAtom);
 
@@ -32,11 +35,16 @@ export default function Page() {
   };
 
   return (
-    <EditableGrid
-      grid={grid}
-      onCellChange={handleCellChange}
-      onResize={handleResize}
-      onClear={handleClear}
-    />
+    <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+      <div>
+        <GridControls
+          rowCount={rowCount}
+          colCount={colCount}
+          onResize={handleResize}
+          onClear={handleClear}
+        />
+        <EditableGrid grid={grid} onCellChange={handleCellChange} />
+      </div>
+    </div>
   );
 }
