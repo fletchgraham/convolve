@@ -3,8 +3,10 @@
 export default function GridControls({
   rowCount,
   colCount,
+  showBorders,
   onResize,
   onClear,
+  onToggleBorders,
 }) {
   const controlsStyle = {
     marginBottom: 8,
@@ -43,6 +45,14 @@ export default function GridControls({
           }
           style={inputStyle}
         />
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={showBorders}
+          onChange={(e) => onToggleBorders(e.target.checked)}
+        />
+        Show Borders
       </label>
       <button onClick={() => onClear()}>Clear</button>
     </div>

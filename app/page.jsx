@@ -7,6 +7,7 @@ import {
   colsAtom,
   setGridSizeAtom,
   clearGridAtom,
+  showImageBordersAtom,
   kernelAtom,
   kernelSizeAtom,
   setKernelSizeAtom,
@@ -21,6 +22,7 @@ export default function Page() {
   const [grid, setGrid] = useAtom(gridAtom);
   const rowCount = useAtomValue(rowsAtom);
   const colCount = useAtomValue(colsAtom);
+  const [showImageBorders, setShowImageBorders] = useAtom(showImageBordersAtom);
   const setGridSize = useSetAtom(setGridSizeAtom);
   const clearGrid = useSetAtom(clearGridAtom);
 
@@ -62,6 +64,10 @@ export default function Page() {
     clearKernel();
   };
 
+  const handleToggleBorders = (checked) => {
+    setShowImageBorders(checked);
+  };
+
   const panelStyle = {
     display: "flex",
     flexDirection: "column",
@@ -93,10 +99,16 @@ export default function Page() {
         <GridControls
           rowCount={rowCount}
           colCount={colCount}
+          showBorders={showImageBorders}
           onResize={handleResize}
           onClear={handleClear}
+          onToggleBorders={handleToggleBorders}
         />
-        <EditableGrid grid={grid} onCellChange={handleCellChange} />
+        <EditableGrid
+          grid={grid}
+          onCellChange={handleCellChange}
+          showBorders={showImageBorders}
+        />
       </div>
     </div>
   );

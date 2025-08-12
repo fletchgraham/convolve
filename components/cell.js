@@ -1,6 +1,6 @@
 "use client";
 
-export default function Cell({ value, onChange }) {
+export default function Cell({ value, onChange, showBorders = true }) {
   const containerStyle = {
     display: "flex",
     width: "100%",
@@ -16,7 +16,7 @@ export default function Cell({ value, onChange }) {
     minWidth: 0,
     minHeight: 0,
     boxSizing: "border-box",
-    border: ".5px solid #000",
+    border: showBorders ? ".5px solid #000" : "none",
     background: "blue",
     fontFamily: "monospace",
     fontSize: "0.85rem",

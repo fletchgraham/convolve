@@ -2,7 +2,11 @@
 
 import Cell from "./cell";
 
-export default function EditableGrid({ grid, onCellChange }) {
+export default function EditableGrid({
+  grid,
+  onCellChange,
+  showBorders = true,
+}) {
   const rowCount = grid.length;
   const colCount = grid[0]?.length || 0;
 
@@ -18,7 +22,7 @@ export default function EditableGrid({ grid, onCellChange }) {
     gridTemplateRows: `repeat(${rowCount}, ${cellSize}px)`,
     width: gridWidth,
     height: gridHeight,
-    border: ".5px solid #000",
+    border: showBorders ? ".5px solid #000" : "none",
     overflow: "hidden",
     minWidth: 0,
     minHeight: 0,
@@ -33,6 +37,7 @@ export default function EditableGrid({ grid, onCellChange }) {
             key={`${r}-${c}`}
             value={value}
             onChange={(e) => onCellChange(r, c, e.target.value)}
+            showBorders={showBorders}
           />
         ))
       )}

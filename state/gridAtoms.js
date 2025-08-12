@@ -35,6 +35,8 @@ export const gridAtom = atom(makeInitialGrid());
 export const rowsAtom = atom((get) => get(gridAtom).length);
 export const colsAtom = atom((get) => get(gridAtom)[0]?.length || 0);
 
+export const showImageBordersAtom = atom(false);
+
 export const setGridSizeAtom = atom(null, (get, set, { rows, cols }) => {
   const current = get(gridAtom);
   set(gridAtom, ensureSize(current, rows, cols));
