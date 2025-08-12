@@ -1,6 +1,6 @@
 "use client";
 
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import {
   gridAtom,
   rowsAtom,
@@ -8,21 +8,16 @@ import {
   setGridSizeAtom,
   clearGridAtom,
 } from "../state/gridAtoms";
+import Cell from "./cell";
 
 export default function EditableGrid() {
-  const [grid, setGrid] = useAtom(gridAtom);
+  const grid = useAtomValue(gridAtom);
   const rowCount = useAtomValue(rowsAtom);
   const colCount = useAtomValue(colsAtom);
   const setGridSize = useSetAtom(setGridSizeAtom);
   const clearGrid = useSetAtom(clearGridAtom);
 
-  const handleCellChange = (r, c, value) => {
-    setGrid((prev) => {
-      const next = prev.map((row) => row.slice());
-      next[r][c] = value;
-      return next;
-    });
-  };
+  // cell editing is handled inside <Cell /> via jotai
 
   return (
     <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
@@ -72,20 +67,7 @@ export default function EditableGrid() {
           }}
         >
           {grid.map((row, r) =>
-            row.map((value, c) => (
-              <input
-                key={`${r}-${c}`}
-                value={value}
-                onChange={(e) => handleCellChange(r, c, e.target.value)}
-                style={{
-                  border: ".5px solid #000",
-                  background: "blue",
-                  fontFamily: "monospace",
-                  fontSize: "0.85rem",
-                  textAlign: "center",
-                }}
-              />
-            ))
+            row.map((_, c) => <Cell key={`${r}-${c}`} r={r} c={c} />)
           )}
         </div>
       </div>
