@@ -1,23 +1,6 @@
 "use client";
 
-import { useAtomValue, useSetAtom } from "jotai";
-import { gridAtom } from "../state/gridAtoms";
-
-export default function Cell({ r, c }) {
-  const grid = useAtomValue(gridAtom);
-  const setGrid = useSetAtom(gridAtom);
-  const value = grid[r]?.[c] ?? "";
-
-  const onChange = (e) => {
-    const v = e.target.value;
-    setGrid((prev) => {
-      const next = prev.map((row) => row.slice());
-      if (!next[r]) next[r] = [];
-      next[r][c] = v;
-      return next;
-    });
-  };
-
+export default function Cell({ value, onChange }) {
   return (
     <div
       style={{

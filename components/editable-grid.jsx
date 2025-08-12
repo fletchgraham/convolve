@@ -1,21 +1,15 @@
 "use client";
 
-import { useAtomValue, useSetAtom } from "jotai";
-import {
-  gridAtom,
-  rowsAtom,
-  colsAtom,
-  setGridSizeAtom,
-  clearGridAtom,
-} from "../state/gridAtoms";
 import Cell from "./cell";
 
-export default function EditableGrid() {
-  const grid = useAtomValue(gridAtom);
-  const rowCount = useAtomValue(rowsAtom);
-  const colCount = useAtomValue(colsAtom);
-  const setGridSize = useSetAtom(setGridSizeAtom);
-  const clearGrid = useSetAtom(clearGridAtom);
+export default function EditableGrid({
+  grid,
+  onCellChange,
+  onResize,
+  onClear,
+}) {
+  const rowCount = grid.length;
+  const colCount = grid[0]?.length || 0;
 
   // Dynamically calculate cell size so all cells are square
   const maxGridSize = 400; // px
@@ -41,7 +35,7 @@ export default function EditableGrid() {
               min={1}
               value={rowCount}
               onChange={(e) =>
-                setGridSize({ rows: Number(e.target.value), cols: colCount })
+                onResize({ rows: Number(e.target.value), cols: colCount })
               }
               style={{ width: 64, marginLeft: 6 }}
             />
@@ -53,12 +47,12 @@ export default function EditableGrid() {
               min={1}
               value={colCount}
               onChange={(e) =>
-                setGridSize({ rows: rowCount, cols: Number(e.target.value) })
+                onResize({ rows: rowCount, cols: Number(e.target.value) })
               }
               style={{ width: 64, marginLeft: 6 }}
             />
           </label>
-          <button onClick={() => clearGrid()}>Clear</button>
+          <button onClick={() => onClear()}>Clear</button>
         </div>
 
         <div
@@ -76,7 +70,13 @@ export default function EditableGrid() {
           }}
         >
           {grid.map((row, r) =>
-            row.map((_, c) => <Cell key={`${r}-${c}`} r={r} c={c} />)
+            row.map((value, c) => (
+              <Cell
+                key={`${r}-${c}`}
+                value={value}
+                onChange={(e) => onCellChange(r, c, e.target.value)}
+              />
+            ))
           )}
         </div>
       </div>
