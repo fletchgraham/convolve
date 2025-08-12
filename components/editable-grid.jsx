@@ -10,6 +10,26 @@ export default function EditableGrid({
   const rowCount = grid.length;
   const colCount = grid[0]?.length || 0;
 
+  // Calculate min and max values in the grid for color mapping
+  const flatValues = grid.flat().map(value => parseFloat(value) || 0);
+  const minValue = Math.min(...flatValues);
+  const maxValue = Math.max(...flatValues);
+  const valueRange = maxValue - minValue;
+
+  // Function to map a cell value to a grayscale color
+  const getColorForValue = (value) => {
+    const numValue = parseFloat(value) || 0;
+    if (valueRange === 0) {
+      // If all values are the same, use middle gray
+      return "rgb(128, 128, 128)";
+    }
+    
+    // Map value to 0-255 range (0 = black, 255 = white)
+    const normalizedValue = (numValue - minValue) / valueRange;
+    const grayValue = Math.round(normalizedValue * 255);
+    return `rgb(${grayValue}, ${grayValue}, ${grayValue})`;
+  };
+
   // Dynamically calculate cell size so all cells are square
   const maxGridSize = 400; // px
   const cellSize = Math.floor(maxGridSize / Math.max(colCount, rowCount));
@@ -38,6 +58,7 @@ export default function EditableGrid({
             value={value}
             onChange={(e) => onCellChange(r, c, e.target.value)}
             showBorders={showBorders}
+            color={getColorForValue(value)}
           />
         ))
       )}
