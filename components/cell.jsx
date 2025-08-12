@@ -1,6 +1,11 @@
 "use client";
 
-export default function Cell({ value, onChange, showBorders = true, color = "blue" }) {
+export default function Cell({
+  value,
+  onChange,
+  showBorders = true,
+  color = "blue",
+}) {
   const containerStyle = {
     display: "flex",
     width: "100%",

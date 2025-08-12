@@ -6,6 +6,7 @@ import {
   kernelSizeAtom,
   setKernelSizeAtom,
   clearKernelAtom,
+  setKernelPresetAtom,
 } from "../state/gridAtoms";
 import EditableGrid from "./editable-grid";
 import KernelControls from "./kernel-controls";
@@ -15,6 +16,7 @@ export default function KernelComponent() {
   const kernelSize = useAtomValue(kernelSizeAtom);
   const setKernelSize = useSetAtom(setKernelSizeAtom);
   const clearKernel = useSetAtom(clearKernelAtom);
+  const setKernelPreset = useSetAtom(setKernelPresetAtom);
 
   const handleKernelCellChange = (r, c, value) => {
     setKernel((prev) => {
@@ -32,6 +34,12 @@ export default function KernelComponent() {
     clearKernel();
   };
 
+  const handlePresetSelect = (presetKey) => {
+    if (presetKey) {
+      setKernelPreset(presetKey);
+    }
+  };
+
   const titleStyle = {
     fontSize: "1.2rem",
     fontWeight: "bold",
@@ -45,6 +53,7 @@ export default function KernelComponent() {
         kernelSize={kernelSize}
         onResize={handleKernelResize}
         onClear={handleKernelClear}
+        onPresetSelect={handlePresetSelect}
       />
       <EditableGrid grid={kernel} onCellChange={handleKernelCellChange} />
     </div>

@@ -7,9 +7,7 @@ export default function Page() {
   return (
     <div style={{ display: "flex", minHeight: "100vh" }}>
       <ControlPanel />
-      <div style={{ flex: 1, padding: 16 }}>
-        <ImagePanel />
-      </div>
+      <ImagePanel />
     </div>
   );
 }

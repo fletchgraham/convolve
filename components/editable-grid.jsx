@@ -11,7 +11,7 @@ export default function EditableGrid({
   const colCount = grid[0]?.length || 0;
 
   // Calculate min and max values in the grid for color mapping
-  const flatValues = grid.flat().map(value => parseFloat(value) || 0);
+  const flatValues = grid.flat().map((value) => parseFloat(value) || 0);
   const minValue = Math.min(...flatValues);
   const maxValue = Math.max(...flatValues);
   const valueRange = maxValue - minValue;
@@ -23,7 +23,7 @@ export default function EditableGrid({
       // If all values are the same, use middle gray
       return "rgb(128, 128, 128)";
     }
-    
+
     // Map value to 0-255 range (0 = black, 255 = white)
     const normalizedValue = (numValue - minValue) / valueRange;
     const grayValue = Math.round(normalizedValue * 255);
