@@ -22,8 +22,15 @@ export default function ImagePanel() {
     marginBottom: 4,
   };
 
+  const panelStyle = {
+    flex: 1, // Take up remaining space after control panel
+    display: "flex",
+    flexDirection: "column",
+    minWidth: 0, // Allow shrinking if needed
+  };
+
   return (
-    <div>
+    <div style={panelStyle}>
       <EditableGrid
         grid={grid}
         onCellChange={handleCellChange}

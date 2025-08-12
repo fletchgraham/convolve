@@ -10,7 +10,9 @@ export default function ControlPanel() {
     gap: 24,
     padding: 16,
     borderRight: "2px solid #ccc",
-    minWidth: 300,
+    width: 250, // Fixed width for consistent left panel
+    flexShrink: 0, // Prevent shrinking
+    overflow: "wrap", // Handle content overflow gracefully
   };
 
   return (
