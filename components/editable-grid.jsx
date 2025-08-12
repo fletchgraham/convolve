@@ -61,9 +61,13 @@ export default function EditableGrid() {
           style={{
             display: "grid",
             gridTemplateColumns: `repeat(${colCount}, 1fr)`,
-            width: "100%",
-            aspectRatio: `${colCount} / ${rowCount}`,
+            gridTemplateRows: `repeat(${rowCount}, 1fr)`,
+            width: 400,
+            height: 400,
             border: ".5px solid #000",
+            overflow: "hidden",
+            minWidth: 0,
+            minHeight: 0,
           }}
         >
           {grid.map((row, r) =>
