@@ -7,6 +7,11 @@ const makeInitialGrid = (rows = 3, cols = 3) =>
     Array.from({ length: cols }, (_, c) => 0)
   );
 
+const makeInitialKernel = (size = 3) =>
+  Array.from({ length: size }, (_, r) =>
+    Array.from({ length: size }, (_, c) => 0)
+  );
+
 const ensureSize = (grid, newRows, newCols) => {
   const rows = Math.max(1, newRows | 0);
   const cols = Math.max(1, newCols | 0);
@@ -24,6 +29,7 @@ const ensureSize = (grid, newRows, newCols) => {
   return resizedRows;
 };
 
+// Image grid atoms (existing)
 export const gridAtom = atom(makeInitialGrid());
 
 export const rowsAtom = atom((get) => get(gridAtom).length);
@@ -40,5 +46,24 @@ export const clearGridAtom = atom(null, (get, set) => {
   set(
     gridAtom,
     Array.from({ length: rows }, () => Array.from({ length: cols }, () => ""))
+  );
+});
+
+// Kernel matrix atoms (new)
+export const kernelAtom = atom(makeInitialKernel());
+
+export const kernelSizeAtom = atom((get) => get(kernelAtom).length);
+
+export const setKernelSizeAtom = atom(null, (get, set, size) => {
+  // Ensure odd number, minimum 3
+  const oddSize = Math.max(3, size % 2 === 0 ? size + 1 : size);
+  set(kernelAtom, makeInitialKernel(oddSize));
+});
+
+export const clearKernelAtom = atom(null, (get, set) => {
+  const size = get(kernelSizeAtom);
+  set(
+    kernelAtom,
+    Array.from({ length: size }, () => Array.from({ length: size }, () => ""))
   );
 });
