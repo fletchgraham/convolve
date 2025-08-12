@@ -10,6 +10,7 @@ export default function Cell({
     display: "flex",
     width: "100%",
     height: "100%",
+    aspectRatio: "1", // Ensures each cell is perfectly square
     minWidth: 0,
     minHeight: 0,
   };

@@ -30,18 +30,14 @@ export default function EditableGrid({
     return `rgb(${grayValue}, ${grayValue}, ${grayValue})`;
   };
 
-  // Dynamically calculate cell size so all cells are square
-  const maxGridSize = 400; // px
-  const cellSize = Math.floor(maxGridSize / Math.max(colCount, rowCount));
-  const gridWidth = cellSize * colCount;
-  const gridHeight = cellSize * rowCount;
-
+  // Dynamically calculate cell size to be responsive and square
+  // Use CSS Grid with fractional units and aspect-ratio for perfect squares
   const containerStyle = {
     display: "grid",
-    gridTemplateColumns: `repeat(${colCount}, ${cellSize}px)`,
-    gridTemplateRows: `repeat(${rowCount}, ${cellSize}px)`,
-    width: gridWidth,
-    height: gridHeight,
+    gridTemplateColumns: `repeat(${colCount}, 1fr)`,
+    gridTemplateRows: `repeat(${rowCount}, 1fr)`,
+    width: "100%",
+    aspectRatio: `${colCount} / ${rowCount}`, // Maintains proportional container
     border: showBorders ? ".5px solid #000" : "none",
     overflow: "hidden",
     minWidth: 0,
