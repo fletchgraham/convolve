@@ -23,8 +23,7 @@ export default function ImagePanel() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-      <h2 style={titleStyle}>Image</h2>
+    <div>
       <EditableGrid
         grid={grid}
         onCellChange={handleCellChange}
