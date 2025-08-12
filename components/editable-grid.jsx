@@ -17,7 +17,11 @@ export default function EditableGrid() {
   const setGridSize = useSetAtom(setGridSizeAtom);
   const clearGrid = useSetAtom(clearGridAtom);
 
-  // cell editing is handled inside <Cell /> via jotai
+  // Dynamically calculate cell size so all cells are square
+  const maxGridSize = 400; // px
+  const cellSize = Math.floor(maxGridSize / Math.max(colCount, rowCount));
+  const gridWidth = cellSize * colCount;
+  const gridHeight = cellSize * rowCount;
 
   return (
     <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
@@ -60,14 +64,15 @@ export default function EditableGrid() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: `repeat(${colCount}, 1fr)`,
-            gridTemplateRows: `repeat(${rowCount}, 1fr)`,
-            width: 400,
-            height: 400,
+            gridTemplateColumns: `repeat(${colCount}, ${cellSize}px)`,
+            gridTemplateRows: `repeat(${rowCount}, ${cellSize}px)`,
+            width: gridWidth,
+            height: gridHeight,
             border: ".5px solid #000",
             overflow: "hidden",
             minWidth: 0,
             minHeight: 0,
+            background: "#fff",
           }}
         >
           {grid.map((row, r) =>
