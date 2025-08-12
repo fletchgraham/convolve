@@ -1,11 +1,16 @@
 "use client";
 
 import { useAtom, useAtomValue } from "jotai";
-import { gridAtom, showImageBordersAtom } from "../state/gridAtoms";
-import EditableGrid from "./editable-grid";
+import {
+  gridAtom,
+  showImageBordersAtom,
+  renderedImageAtom,
+} from "../state/gridAtoms";
+import ConvolutionGrid from "./convolution-grid";
 
 export default function ImagePanel() {
   const [grid, setGrid] = useAtom(gridAtom);
+  const renderedImage = useAtomValue(renderedImageAtom);
   const showImageBorders = useAtomValue(showImageBordersAtom);
 
   const handleCellChange = (r, c, value) => {
@@ -31,8 +36,9 @@ export default function ImagePanel() {
 
   return (
     <div style={panelStyle}>
-      <EditableGrid
-        grid={grid}
+      <ConvolutionGrid
+        originalGrid={grid}
+        renderedGrid={renderedImage}
         onCellChange={handleCellChange}
         showBorders={showImageBorders}
       />
